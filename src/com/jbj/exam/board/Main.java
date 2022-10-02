@@ -3,63 +3,78 @@ package com.jbj.exam.board;
 import java.util.Scanner;
 
 public class Main {
-
+	
 	public static void main(String[] args) {
 		
 		Scanner sc = new Scanner(System.in);
+		System.out.println("== ê²Œì‹œíŒ v 0.1 ==");
+		System.out.println("== í”„ë¡œê·¸ë¨ ì‹œì‘ ==");
 
-	    System.out.println("== °Ô½ÃÆÇ v 0.1 ==");
-	    System.out.println("== ÇÁ·Î±×·¥ ½ÃÀÛ ==");
-	    
-	    int articleLastId = 0;
-	    
-	    while (true) {
-	        System.out.printf("¸í·É) ");
-	        String cmd = sc.nextLine();
+		int articleLastId = 0;
+		
+		Article lastArticle = null;
 
-	        if ( cmd.equals("exit")) {
-	          break;
-	        }
+		while (true) {
+			System.out.printf("ëª…ë ¹) ");
+			
+			String cmd = sc.nextLine();
+			
+			if (cmd.equals("exit")) {
+				break;
+				
+			// - [] /usr/article/detail ì…ë ¥ì²˜ë¦¬
+			// - [] /usr/article/detail ì…ë ¥ë˜ë©´ ê°€ì¥ ìµœê·¼ ê²Œì‹œë¬¼ ì •ë³´ ë…¸ì¶œ
+			} else if (cmd.equals("/usr/article/detail")) {
 
-	        else if( cmd.equals("/usr/article/write")) {
-	            System.out.println("- °Ô½Ã¹° µî·Ï -");
-	            System.out.printf("Á¦¸ñ : ");
-	            String title = sc.nextLine();
-	            System.out.printf("³»¿ë : ");
-	            String body = sc.nextLine();
-	            
-	            int id = articleLastId + 1;
-	            articleLastId++;
-	            
-	            Article article = new Article(id, title, body);
-	            
-	            System.out.println("»ı¼ºµÈ °³½Ã¹° °´Ã¼ : " + article);
-	            System.out.printf("%d¹ø °Ô½Ã¹°ÀÌ ÀÔ·ÂµÇ¾ú½À´Ï´Ù.\n", id);
-	          }
-	          else {
-	            System.out.printf("ÀÔ·Â µÈ ¸í·É¾î : %s\n", cmd);
-	          }
-	      }
+				if (lastArticle == null) {
+					System.out.println("ê²Œì‹œë¬¼ì´ ì¡´ì¬í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.");
+					continue;
+				}
 
-	      System.out.println("== ÇÁ·Î±×·¥ ³¡ ==");
+				Article article = lastArticle;
 
-	      sc.close();
+				System.out.println("- ê²Œì‹œë¬¼ ìƒì„¸ ë‚´ìš© -");
+				System.out.printf("ë²ˆí˜¸ : %d\n", article.id);
+				System.out.printf("ì œëª© : %s\n", article.title);
+				System.out.printf("ë‚´ìš© : %s\n", article.body);
+				
+			} else if (cmd.equals("/usr/article/write")) {
+				
+				System.out.println("- ê²Œì‹œë¬¼ ë“±ë¡ -");
+				System.out.printf("ì œëª© : ");
+				String title = sc.nextLine();
+				System.out.printf("ë‚´ìš© : ");
+				String body = sc.nextLine();
+
+				int id = ++articleLastId;
+
+				Article article = new Article(id, title, body);
+				lastArticle = article;
+				System.out.println("ìƒì„±ëœ ê²Œì‹œë¬¼ ê°ì²´ : " + article);
+				System.out.printf("%dë²ˆ ê²Œì‹œë¬¼ì´ ì…ë ¥ë˜ì—ˆìŠµë‹ˆë‹¤.\n", article.id);
+			} else {
+				System.out.printf("ì…ë ¥ ëœ ëª…ë ¹ì–´ : %s\n", cmd);
+			}
+		}
+		System.out.println("== í”„ë¡œê·¸ë¨ ë ==");
+		sc.close();
 	}
 }
 
-class Article{
+class Article {
 	int id;
 	String title;
 	String body;
-	
-	public Article(int id, String title, String body) {
-		this.id = id;
-        this.title = title;
-        this.body = body;
+	String í…ŒìŠ¤íŠ¸;
+
+	Article(int id_, String title_, String body_) {
+		this.id = id_;
+		this.title = title_;
+		this.body = body_;
 	}
 
 	@Override
-	  public String toString() {
-	    return String.format("{id : %d, title : \"%s\", body : \"%s\"}", id, title, body);
-	  }
+	public String toString() {
+		return String.format("{id : %d, title : \"%s\", body : \"%s\"}", id, title, body);
+	}
 }

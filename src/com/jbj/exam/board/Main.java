@@ -11,6 +11,8 @@ public class Main {
 	    System.out.println("== 게시판 v 0.1 ==");
 	    System.out.println("== 프로그램 시작 ==");
 	    
+	    int articleLastId = 0;
+	    
 	    while (true) {
 	        System.out.printf("명령) ");
 	        String cmd = sc.nextLine();
@@ -25,7 +27,10 @@ public class Main {
 	            String title = sc.nextLine();
 	            System.out.printf("내용 : ");
 	            String body = sc.nextLine();
-	            int id = 1;
+	            
+	            int id = articleLastId + 1;
+	            articleLastId++;
+	            
 	            System.out.printf("%d번 게시물이 입력되었습니다.\n", id);
 	          }
 	          else {

@@ -22,6 +22,10 @@ public class Main {
 		 ArrayList<Article> articles = new ArrayList<Article>();
 
 		 makeTestData(articles);
+		 
+		 if ( articles.size() > 0) {
+		      articleLastId = articles.get(articles.size() - 1).id;
+		    }
 
 		while (true) {
 			System.out.printf("명령) ");

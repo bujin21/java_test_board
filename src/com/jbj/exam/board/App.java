@@ -3,7 +3,7 @@ package com.jbj.exam.board;
 import java.util.Scanner;
 
 public class App {
-	  void main() {
+	  void run() {
 
 	    Scanner sc = Container.sc;
 
@@ -32,6 +32,8 @@ public class App {
 	    	  Container.usrArticleController.actionDelete(rq);
 	      } else if (rq.getUrlPath().equals("/usr/member/join")) {
 	          Container.usrMemberController.actionJoin(rq);
+	      } else if (rq.getUrlPath().equals("/usr/member/login")) {
+	          Container.usrMemberController.actionLogin(rq);
 	      } else {
 	        System.out.printf("입력 된 명령어 : %s\n", cmd);
 	      }

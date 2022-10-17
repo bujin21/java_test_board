@@ -29,7 +29,7 @@ public class App {
 	      } else if (rq.getUrlPath().equals("/usr/article/modify")) {
 	    	  Container.usrArticleController.actionModify(rq);
 	      } else if (rq.getUrlPath().equals("/usr/article/delete")) {
-	    	  Container.usrArticleController.actionDelete(rq, sc);
+	    	  Container.usrArticleController.actionDelete(rq);
 	      } else {
 	        System.out.printf("입력 된 명령어 : %s\n", cmd);
 	      }

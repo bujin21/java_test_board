@@ -6,6 +6,7 @@ public class App {
 	  void run() {
 
 	    Scanner sc = Container.sc;
+	    Session session = Container.getSession();
 
 	    System.out.println("== 게시판 v 0.1 ==");
 	    System.out.println("== 프로그램 시작 ==");
@@ -13,8 +14,16 @@ public class App {
 	    
 
 	    while (true) {
-	      System.out.printf("명령) ");
-	      String cmd = sc.nextLine();
+	    	Member loginedMember = (Member) session.getAttribute("loginedMember");
+	    	
+	    	String promptName = "명령";
+	    	
+	    	if( loginedMember != null) {
+	    		promptName = loginedMember.loginId;
+	    	}
+	    	
+	    	System.out.printf("%s) ", promptName);
+	    	String cmd = sc.nextLine();
 
 	      Rq rq = new Rq(cmd);
 

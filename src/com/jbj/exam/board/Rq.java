@@ -41,4 +41,10 @@ public int getIntParam(String paramsName, int defaultValue) {
 		}
 		return params.get(paramsName);
 	}
+
+	public void setSessionAttr(String key, Member value) {
+		Session session = Container.getSession();
+		
+		session.setAttribute(key, value);
+	}
 }

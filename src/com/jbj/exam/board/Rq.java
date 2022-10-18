@@ -47,4 +47,11 @@ public int getIntParam(String paramsName, int defaultValue) {
 		
 		session.setAttribute(key, value);
 	}
+
+	public void removeSessionAttr(String key) {
+		Session session = Container.getSession();
+		
+		session.removeAttribute(key);
+		
+	}
 }

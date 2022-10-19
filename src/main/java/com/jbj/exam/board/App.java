@@ -2,7 +2,10 @@ package com.jbj.exam.board;
 
 import com.jbj.exam.board.container.Container;
 import com.jbj.exam.board.dto.Member;
+import com.jbj.exam.board.interceptor.Interceptor;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class App {
@@ -29,6 +32,10 @@ public class App {
 	    	String cmd = sc.nextLine();
 
 				rq.setCommand(cmd);
+
+				if(runInterceptors(rq) == false){
+					continue;
+				}
 
 	      if (rq.getUrlPath().equals("exit")) {
 	        break;
@@ -58,5 +65,20 @@ public class App {
 	    sc.close();
 	  }
 
-	 
+	private boolean runInterceptors(Rq rq) {
+		List<Interceptor> interceptors = new ArrayList<>();
+
+		interceptors.add(Container.getNeedLoginInterceptor());
+		interceptors.add(Container.getNeedLogoutInterceptor());
+
+		for(Interceptor interceptor : interceptors){
+			if(interceptor.run(rq) == false){
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+
 }

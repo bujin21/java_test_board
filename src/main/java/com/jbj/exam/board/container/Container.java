@@ -3,6 +3,9 @@ package com.jbj.exam.board.container;
 import com.jbj.exam.board.Session;
 import com.jbj.exam.board.controller.UsrArticleController;
 import com.jbj.exam.board.controller.UsrMemberController;
+import com.jbj.exam.board.interceptor.Interceptor;
+import com.jbj.exam.board.interceptor.NeedLoginInterceptor;
+import com.jbj.exam.board.interceptor.NeedLogoutInterceptor;
 import com.jbj.exam.board.repository.ArticleRepository;
 import com.jbj.exam.board.repository.MemberRepository;
 import com.jbj.exam.board.service.ArticleService;
@@ -25,6 +28,10 @@ public class Container {
 	@Getter
 	private  static  ArticleRepository articleRepository;
 	@Getter
+	private static NeedLoginInterceptor needLoginInterceptor;
+	@Getter
+	private static NeedLogoutInterceptor needLogoutInterceptor;
+	@Getter
 	private static UsrArticleController usrArticleController;
 	@Getter
 	private static UsrMemberController usrMemberController ;
@@ -37,6 +44,9 @@ public class Container {
 
 		memberService = new MemberService();
 		articleService = new ArticleService();
+
+		needLoginInterceptor =new NeedLoginInterceptor();
+		needLogoutInterceptor = new NeedLogoutInterceptor();
 
 		usrArticleController = new UsrArticleController();
 		usrMemberController = new UsrMemberController();

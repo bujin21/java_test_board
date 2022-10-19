@@ -1,13 +1,16 @@
 package com.jbj.exam.board;
 
+import com.jbj.exam.board.container.Container;
+import com.jbj.exam.board.util.Util;
+
 import java.util.Map;
 
 public class Rq {
-  String url;
-  Map<String, String> params;
-  String urlPath;
+  private String url;
+  private Map<String, String> params;
+  private String urlPath;
 
-  Rq(String url) {
+  public Rq(String url) {
     this.url = url;
     params = Util.getParamsFromUrl(this.url);
     urlPath = Util.getUrlPathFromUrl(this.url);
@@ -42,7 +45,7 @@ public int getIntParam(String paramsName, int defaultValue) {
 		return params.get(paramsName);
 	}
 
-	public void setSessionAttr(String key, Member value) {
+	public void setSessionAttr(String key, Object value) {
 		Session session = Container.getSession();
 		
 		session.setAttribute(key, value);

@@ -1,4 +1,8 @@
-package com.jbj.exam.board;
+package com.jbj.exam.board.controller;
+
+import com.jbj.exam.board.dto.Member;
+import com.jbj.exam.board.Rq;
+import com.jbj.exam.board.container.Container;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +18,7 @@ public class UsrMemberController {
 		makeTestData();
 
 		if (members.size() > 0) {
-			memberLastId = members.get(members.size() - 1).id;
+			memberLastId = members.get(members.size() - 1).getId();
 		}
 
 	}
@@ -30,11 +34,11 @@ public class UsrMemberController {
 
 		System.out.println("- 회원가입 -");
 		System.out.printf("로그인 아이디 : ");
-		String loginId = Container.sc.nextLine();
+		String loginId = Container.getSc().nextLine();
 		System.out.printf("로그인 비밀번호 : ");
-		String loginPw = Container.sc.nextLine();
+		String loginPw = Container.getSc().nextLine();
 		System.out.printf("로그인 비밀번호 확인: ");
-		String loginConfirm = Container.sc.nextLine();
+		String loginConfirm = Container.getSc().nextLine();
 
 		if (loginPw.equals(loginConfirm) == false) {
 			System.out.println("비밀번호가 일치하지 않습니다.");
@@ -47,13 +51,13 @@ public class UsrMemberController {
 
 		members.add(member);
 
-		System.out.printf("%s님. 가입을 환영합니다.\n", member.loginId);
-		System.out.printf("%d번 회원이 생성되었습니다.\n", member.id);
+		System.out.printf("%s님. 가입을 환영합니다.\n", member.getLoginId());
+		System.out.printf("%d번 회원이 생성되었습니다.\n", member.getId());
 	}
 
 	public void actionLogin(Rq rq) {
 		System.out.printf("로그인 아이디 : ");
-		String loginId = Container.sc.nextLine().trim();
+		String loginId = Container.getSc().nextLine().trim();
 		
 		if(loginId.length() == 0) {
 			System.out.println("로그인 아이디를 입력해주세요.");
@@ -68,26 +72,26 @@ public class UsrMemberController {
 		}
 		
 		System.out.printf("로그인 비밀번호 : ");
-		String loginPw = Container.sc.nextLine().trim();
+		String loginPw = Container.getSc().nextLine().trim();
 		
 		if(loginPw.length() == 0) {
 		System.out.println("로그인 비밀번호를 입력해주세요.");
 			return;
 		}
 		
-		if(member.loginPw.equals(loginPw) == false) {
+		if(member.getLoginPw().equals(loginPw) == false) {
 			System.out.println("비밀번호가 일치하지 않습니다.");
 			return;
 		}
 		
 		rq.setSessionAttr("loginedMember", member);
 		
-		System.out.printf("%s님 환영합니다.\n", member.loginId);
+		System.out.printf("%s님 환영합니다.\n", member.getLoginId());
 	}
 	
 	private Member getMemberByLoginId(String loginId) {
 		for(Member member : members ) {
-			if(member.loginId.equals(loginId)) {
+			if(member.getLoginId().equals(loginId)) {
 				return member;
 			}
 		}

@@ -1,5 +1,7 @@
 package com.jbj.exam.board;
 
+import com.jbj.exam.board.dto.Member;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,7 +16,7 @@ public class Session {
 		return store.get(key);
 	}
 
-	public void setAttribute(String key, Member value) {
+	public void setAttribute(String key, Object value) {
 		store.put(key, value);
 	}
 	public void removeAttribute(String key) {

@@ -2,6 +2,7 @@ package com.jbj.exam.board.controller;
 
 import com.jbj.exam.board.dto.Article;
 import com.jbj.exam.board.Rq;
+import com.jbj.exam.board.service.ArticleService;
 import com.jbj.exam.board.util.Util;
 import com.jbj.exam.board.container.Container;
 
@@ -9,25 +10,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UsrArticleController {
-		private int articleLastId;
+		private ArticleService articleService;
 	  private List<Article> articles;
 
 	 public UsrArticleController() {
-	    articleLastId = 0;
-	    articles = new ArrayList<>();
+	    articleService = Container.getArticleService();
+	    articles = articleService.getArticles();
 	    
 	    makeTestData();
-
-	    if (articles.size() > 0) {
-	      articleLastId = articles.get(articles.size() - 1).getId();
-	    }
 	  }
 
 	 public void makeTestData() {
-	    for (int i = 0; i < 100; i++) {
-	      int id = i + 1;
-	      articles.add(new Article(id, "제목" + id, "내용" + id));
-	    }
+	   articleService.makeTestData();
 	  }
 	  public void actionDelete(Rq rq) {
 		    int id = rq.getIntParam("id", 0);
@@ -44,7 +38,7 @@ public class UsrArticleController {
 		      return;
 		    }
 
-		    articles.remove(article);
+		    articleService.deleteArticleById(article.getId());
 
 		    System.out.printf("%d번 게시물이 삭제되었습니다.\n", article.getId());
 		  }
@@ -151,14 +145,9 @@ public class UsrArticleController {
 		    System.out.printf("내용 : ");
 		    String body = Container.getSc().nextLine();
 
-		    int id = ++articleLastId;
+		    int id = articleService.write(title, body);
 
-		    Article article = new Article(id, title, body);
-
-		    articles.add(article);
-
-		    System.out.println("생성된 게시물 객체 : " + article);
-		    System.out.printf("%d번 게시물이 입력되었습니다.\n", article.getId());
+		    System.out.printf("%d번 게시물이 입력되었습니다.\n", id);
 		    
 		  }
 }

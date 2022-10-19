@@ -3,31 +3,19 @@ package com.jbj.exam.board.controller;
 import com.jbj.exam.board.dto.Member;
 import com.jbj.exam.board.Rq;
 import com.jbj.exam.board.container.Container;
+import com.jbj.exam.board.service.MemberService;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class UsrMemberController {
-	private int memberLastId;
-	private List<Member> members;
+
+	private MemberService memberService;
 
 	public UsrMemberController() {
-		memberLastId = 0;
-		members = new ArrayList<>();
+		memberService = Container.getMemberService();
+		memberService.makeTestData();
 
-		makeTestData();
-
-		if (members.size() > 0) {
-			memberLastId = members.get(members.size() - 1).getId();
-		}
-
-	}
-
-	void makeTestData() {
-		for (int i = 0; i < 3; i++) {
-			int id = i + 1;
-			members.add(new Member(id, "user" + id, "user" + id));
-		}
 	}
 
 	public void actionJoin(Rq rq) {
@@ -45,11 +33,9 @@ public class UsrMemberController {
 			return;
 		}
 
-		int id = ++memberLastId;
+		int id = memberService.join(loginId, loginPw);
 
-		Member member = new Member(id, loginId, loginPw);
-
-		members.add(member);
+		Member member = memberService.getMemberByLoginId(loginId);
 
 		System.out.printf("%s님. 가입을 환영합니다.\n", member.getLoginId());
 		System.out.printf("%d번 회원이 생성되었습니다.\n", member.getId());
@@ -64,7 +50,7 @@ public class UsrMemberController {
 			return;
 		}
 		
-		Member member = getMemberByLoginId(loginId);
+		Member member = memberService.getMemberByLoginId(loginId);
 		
 		if( member == null) {
 			System.out.println("해당 회원은 존재하지 않습니다.");
@@ -87,15 +73,6 @@ public class UsrMemberController {
 		rq.login(member);
 		
 		System.out.printf("%s님 환영합니다.\n", member.getLoginId());
-	}
-	
-	private Member getMemberByLoginId(String loginId) {
-		for(Member member : members ) {
-			if(member.getLoginId().equals(loginId)) {
-				return member;
-			}
-		}
-		return null;
 	}
 
 	public void actionLogout(Rq rq) {

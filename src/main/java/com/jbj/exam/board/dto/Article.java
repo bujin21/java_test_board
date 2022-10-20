@@ -4,12 +4,15 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@NoArgsConstructor
+
 @AllArgsConstructor
+@NoArgsConstructor
 @Data
 public class Article {
-	int id;
-	String title;
-	String body;
+	private int id;
+	private int boardId;
+	private String title;
+	private String body;
 
 }
+

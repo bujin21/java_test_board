@@ -88,4 +88,8 @@ public int getIntParam(String paramsName, int defaultValue) {
 	public void logout() {
 		removeSessionAttr("loginedMember");
 	}
+
+	public int getLoginedMemberId() {
+		return getLoginedMember().getId();
+	}
 }

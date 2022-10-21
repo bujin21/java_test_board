@@ -1,6 +1,7 @@
 package com.jbj.exam.board.repository;
 
 import com.jbj.exam.board.dto.Board;
+import com.jbj.exam.board.util.Util;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,5 +21,17 @@ public class BoardRepository {
       }
     }
     return null;
+  }
+
+  public int make(String code, String name) {
+    int id = lastId + 1;
+    String regDate = Util.getNowDateStr();
+    String updateDate = regDate;
+
+    Board board = new Board(id, regDate, updateDate, code, name);
+    boards.add(board);
+    lastId = id;
+
+    return id;
   }
 }

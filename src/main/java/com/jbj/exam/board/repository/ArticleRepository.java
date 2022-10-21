@@ -1,6 +1,7 @@
 package com.jbj.exam.board.repository;
 
 import com.jbj.exam.board.dto.Article;
+import com.jbj.exam.board.util.Util;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +17,9 @@ public class ArticleRepository {
 
   public int write(int boardId, int memberId, String title, String body){
     int id = lastId +1;
-    Article article = new Article(id, boardId, memberId, title, body);
+    String regDate = Util.getNowDateStr();
+    String updateDate = regDate;
+    Article article = new Article(id, regDate, updateDate, boardId, memberId, title, body);
     articles.add(article);
     lastId = id;
 
@@ -42,5 +45,13 @@ public class ArticleRepository {
       }
     }
     return null;
+  }
+
+  public void modify(int id, String title, String body) {
+    Article article = getArticleById(id);
+
+    article.setTitle(title);
+    article.setBody(body);
+    article.setUpdateDate(Util.getNowDateStr());
   }
 }

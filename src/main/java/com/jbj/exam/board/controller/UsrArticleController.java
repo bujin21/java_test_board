@@ -5,6 +5,7 @@ import com.jbj.exam.board.Rq;
 import com.jbj.exam.board.dto.Board;
 import com.jbj.exam.board.service.ArticleService;
 import com.jbj.exam.board.service.BoardService;
+import com.jbj.exam.board.service.MemberService;
 import com.jbj.exam.board.util.Util;
 import com.jbj.exam.board.container.Container;
 
@@ -14,16 +15,18 @@ import java.util.List;
 public class UsrArticleController {
 		private ArticleService articleService;
 		private BoardService boardService;
+		private MemberService memberService;
 
 	 public UsrArticleController() {
 	    articleService = Container.getArticleService();
+			memberService = Container.getMemberService();
 			boardService = Container.getBoardService();
 	    
 	    makeTestData();
 	  }
 
 	 public void makeTestData() {
-		 boardService.makeTestDate();
+		 boardService.makeTestData();
 	   articleService.makeTestData();
 	  }
 	  public void actionDelete(Rq rq) {
@@ -96,14 +99,14 @@ public class UsrArticleController {
 		  }
 
 		  public void actionList(Rq rq) {
+		 		List<Article> articles = articleService.getArticles();
+
 		    System.out.println("- 게시물 리스트 -");
 		    System.out.printf("------------------\n");
-		    System.out.printf("번호 / 제목 / 현재날짜\n");
+		    System.out.printf("번호 / 게시판 / 작성자 / 제목 / 현재날짜\n");
 		    System.out.printf("------------------\n");
 
 		    String searchKeyword = rq.getParam("searchKeyword", "");
-
-				List<Article>	articles = articleService.getArticles();
 
 		    // 검색 시작
 		    List<Article> filteredArticles = articles;
@@ -131,12 +134,22 @@ public class UsrArticleController {
 		    }
 
 		    for (Article article : sortedArticles) {
-		      System.out.printf("%d / %s / %s\n", article.getId(), article.getTitle(), article.getRegDate());
+					String boardName = getBoardNameByBordId(article.getBoardId());
+					String writeName = getWriteNameByBoardId(article.getMemberId());
+		      System.out.printf("%d / %s / %s / %s / %s\n", article.getId(), boardName, writeName, article.getTitle(), article.getRegDate());
 		    }
 
 		  }
 
-		  public void actionWrite(Rq rq) {
+	private String getBoardNameByBordId(int boardId) {
+		 return boardService.getBoardById(boardId).getName();
+	}
+
+	private String getWriteNameByBoardId(int memberId) {
+		return memberService.getMemberById(memberId).getLoginId();
+	}
+
+	public void actionWrite(Rq rq) {
 			  
 		    int boardId = rq.getIntParam("boardId",  0);
 

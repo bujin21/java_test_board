@@ -44,7 +44,9 @@ public class Container {
 	static {
 		sc = new Scanner(System.in);
 		session = new Session();
+
 		memberRepository = new MemberRepository();
+		boardRepository = new BoardRepository();
 		articleRepository = new ArticleRepository();
 
 		memberService = new MemberService();
@@ -55,7 +57,6 @@ public class Container {
 		needLogoutInterceptor = new NeedLogoutInterceptor();
 
 		usrArticleController = new UsrArticleController();
-		boardRepository = new BoardRepository();
 		usrMemberController = new UsrMemberController();
 	}
 

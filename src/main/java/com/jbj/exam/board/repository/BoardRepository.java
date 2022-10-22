@@ -15,8 +15,8 @@ public class BoardRepository {
     lastId = 0;
   }
   public Board getBoardById(int id) {
-    for(Board board : boards) {
-      if(board.getId() == id){
+    for (Board board : boards) {
+      if (board.getId() == id) {
         return board;
       }
     }

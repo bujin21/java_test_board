@@ -22,23 +22,26 @@ public class Util {
 
 		if (urlBits.length == 1) {
 			return params;
-
 		}
+
 		for (String bit : urlBits[1].split("&")) {
 			String[] bitBits = bit.split("=", 2);
+
 			if (bitBits.length == 1) {
 				continue;
 			}
+
 			params.put(bitBits[0], bitBits[1]);
 		}
+
 		return params;
 	}
 
 	public static String getUrlPathFromUrl(String url) {
 		return url.split("\\?", 2)[0];
 	}
-	// 이 함수는 원본리스트를 훼손하지 않고, 새 리스트를 만듭니다. 즉 정렬이 반대인 복사본리스트를 만들어서 반환합니다.
 
+	// 이 함수는 원본리스트를 훼손하지 않고, 새 리스트를 만듭니다. 즉 정렬이 반대인 복사본리스트를 만들어서 반환합니다.
 	public static <T> List<T> reverseList(List<T> list) {
 		List<T> reverse = new ArrayList<>(list.size());
 
@@ -46,5 +49,11 @@ public class Util {
 			reverse.add(list.get(i));
 		}
 		return reverse;
+	}
+
+	public static int getRandomInt(int start, int end ) {
+		int size = end - start + 1;
+
+		return start + (int) (Math.random() * size);
 	}
 }

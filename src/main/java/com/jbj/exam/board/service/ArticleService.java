@@ -23,9 +23,13 @@ public class ArticleService {
     }
   }
 
-  public List<Article> getArticles(int boardId, String orderBy, String searchKeyword, String searchKeywordTypeCode) {
-    return articleRepository.getArticles(boardId, orderBy, searchKeyword, searchKeywordTypeCode);
+  public List<Article> getArticles(int boardId, String orderBy, String searchKeyword, String searchKeywordTypeCode, int page, int pageItemCount) {
+    int limitStart = (page - 1) * pageItemCount;
+    int limitCount = pageItemCount;
+
+    return articleRepository.getArticles(boardId, orderBy, searchKeyword, searchKeywordTypeCode, limitStart, limitCount);
   }
+
 
   public void deleteArticleById(int id) {
     articleRepository.deleteArticleById(id);

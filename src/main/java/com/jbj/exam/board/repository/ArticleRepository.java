@@ -113,4 +113,7 @@ public class ArticleRepository {
   }
 
 
+  public void increaseHitCount(int id) {
+    getArticleById(id).setHitCount(getArticleById(id).getHitCount() + 1);
+  }
 }

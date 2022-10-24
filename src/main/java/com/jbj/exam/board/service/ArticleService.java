@@ -2,6 +2,7 @@ package com.jbj.exam.board.service;
 
 import com.jbj.exam.board.dto.Article;
 import com.jbj.exam.board.repository.ArticleRepository;
+import com.jbj.exam.board.util.Util;
 
 import java.util.List;
 
@@ -13,13 +14,19 @@ public class ArticleService {
     articleRepository = new ArticleRepository();
   }
   public int write(int boardId, int memberId, String title, String body) {
-    return articleRepository.write(boardId, memberId, title, body);
+    return articleRepository.write(boardId, memberId, title, body,0);
   }
+
+  private int writeForTestData(int boardId, int memberId, String title, String body, int hitCount) {
+    return articleRepository.write(boardId, memberId, title, body, hitCount);
+  }
+
   public void makeTestData() {
     for (int i = 0; i < 100; i++) {
       String title = "제목" + (i + 1);
       String body = "내용" + (i + 1);
-      write(i % 2 + 1, i % 2 + 1, title, body);
+
+      writeForTestData(i % 2 + 1, i % 2 + 1, title, body, Util.getRandomInt(1, 100));
     }
   }
 
